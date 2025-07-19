@@ -106,7 +106,7 @@ export default function LandingPage() {
       />
       
       <header className="flex-1 flex items-center justify-center" role="banner">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 mt-12">
           <div className="max-w-3xl mx-auto text-center animate-fade-in-up" style={{ animationFillMode: "forwards" }}>
             <div className="flex justify-center items-center gap-3 mb-6">
               <FileSearch className="w-10 h-10 text-black" />

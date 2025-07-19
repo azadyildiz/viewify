@@ -99,7 +99,7 @@ const ItemCard = React.memo<ItemCardProps>(function ItemCard({
         </CardTitle>
       </CardHeader>
 
-      <CardContent className={cn("pt-4 flex-1 w-full max-w-full min-w-0 overflow-x-auto break-all w-full max-w-full min-w-0 overflow-x-auto", !isCardExpanded && "max-h-[300px] overflow-y-auto")}>
+      <CardContent className={cn("pt-4 flex-1 break-all w-full max-w-full min-w-0 overflow-x-auto", !isCardExpanded && "max-h-[300px] overflow-y-auto")}>
         {visibleItemFields.map(([key, value]) => (
           <RenderField
             key={key}
