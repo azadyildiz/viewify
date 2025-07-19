@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "papaparse": "^5.5.3",
+    "react-window": "^1.8.11",
+    "sax": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/react-window": "^1.8.8"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Viewify - Data Analysis Tool",
+  "short_name": "Viewify",
+  "description": "Analyze large XML, JSON, and CSV files instantly in your browser. Serverless, private, and fast.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#000000",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["developer", "productivity", "utilities"],
+  "author": "Azad Yıldız",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 64x64 96x96 128x128 256x256 512x512",
+      "type": "image/x-icon"
+    }
+  ]
+} 
