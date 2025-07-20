@@ -210,9 +210,9 @@ export function logError(error: unknown, context?: string) {
      
     console.error('[Error]', context ? `[${context}]` : '', normalized);
   } else {
-    // TODO: Production log servisine gönder
+    // TODO: Send to production log service
     // fetch('/api/log', { method: 'POST', body: ... })
-    // Şimdilik sadece console
+    // For now, just console
      
     console.error('[Error]', context ? `[${context}]` : '', normalized);
   }

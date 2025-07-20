@@ -94,7 +94,10 @@ function collectFieldPaths(obj: Record<string, unknown>, prefix = ""): string[] 
   return paths
 }
 
-
+// Helper function: get root field from a field path
+function getRootField(field: string): string {
+  return field.split('.')[0]
+}
 
 export function applyFilters(
   data: DataItem[],
@@ -115,8 +118,9 @@ export function applyFilters(
   let filtered = data
 
   const allFields = Array.from(new Set(data.flatMap((item) => collectFieldPaths(item))))
-  const activeFields = allFields.filter((field) => !filters.hiddenFields.has(field))
+  const activeFields = allFields.filter((field) => !filters.hiddenFields.has(getRootField(field)))
 
+  // Conditional filter: if root is visible, children are also filtered
   const hasInvalidCondition = filters.conditionalFilters.some(
     (filter: ConditionalFilter) => filter.field && !activeFields.includes(filter.field)
   )
@@ -127,7 +131,10 @@ export function applyFilters(
   if (filters.conditionalFilters && filters.conditionalFilters.length > 0) {
     filtered = filtered.filter((item: DataItem) => {
       const results = filters.conditionalFilters.map((filter: ConditionalFilter) => {
-        if (filters.hiddenFields.has(filter.field)) return true
+        // If root field is hidden, children are also not filtered
+        if (filters.hiddenFields.has(getRootField(filter.field))) return true
+        // If root field is selected, children also get the same condition
+        // (Here filter.field is already root, same condition will be applied to children)
         const value = filter.field
           .split(".")
           .reduce((obj: unknown, key: string) => (obj ? (obj as Record<string, unknown>)[key] : undefined), item)
@@ -141,20 +148,21 @@ export function applyFilters(
     filtered = filtered.filter((item: Record<string, unknown>) => {
       return Object.entries(item).some(
         ([key, val]) =>
-          !filters.hiddenFields.has(key) && val !== null && val !== undefined && String(val).trim() !== ""
+          !filters.hiddenFields.has(getRootField(key)) && val !== null && val !== undefined && String(val).trim() !== ""
       )
     })
   }
 
   if (filters.searchTerm) {
-    const visibleTopLevelFields = Array.from(
+    // Only search in visible root fields and children
+    const visibleRootFields = Array.from(
       new Set((filters.allFields || []).map((path) => path.split(".")[0]))
-    )
+    ).filter((root) => !filters.hiddenFields.has(root))
 
     filtered = filtered.filter((item: Record<string, unknown>) => {
-      return visibleTopLevelFields.some((key) => {
+      return visibleRootFields.some((key) => {
         if (key in item) {
-          return hasSearchTerm(item[key], filters.searchTerm)
+          return hasSearchTerm(item[key] as FlexibleValue, filters.searchTerm)
         }
         return false
       })
