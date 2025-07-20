@@ -6,7 +6,7 @@ let rawData: DataItem[] = [];
 let filteredData: DataItem[] = [];
 let staticMetadata: Partial<ProcessedMetadata> = {};
 
-const PAGE_SIZE = 60;
+const PAGE_SIZE = 36;
 
 // Extract fields from a single object recursively
 function extractFieldsFromObject(obj: Record<string, unknown>, prefix = ""): Set<string> {

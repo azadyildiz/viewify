@@ -113,7 +113,7 @@ export function DataViewer({ state, onReset, onApplyFilters, onPageChange }: Dat
 
   const itemLabel = "Item"
   
-  // Güvenli sayfalama bilgisi alma
+  // Safe pagination info retrieval
   const paginationInfo = state.processedData?.metadata?.pagination ?? {
     currentPage: 1,
     totalPages: 1,
@@ -121,7 +121,7 @@ export function DataViewer({ state, onReset, onApplyFilters, onPageChange }: Dat
     filteredItems: 0,
   };
 
-  // Alan analizi artık worker'dan geliyor.
+  // Field analysis now comes from worker
   const fieldAnalysis = useMemo<{ allFields: string[]; fieldCounts: Map<string, number> }>(() => {
     const fieldAnalysisData = state.processedData?.metadata?.fieldAnalysis;
     if (!fieldAnalysisData ||
@@ -212,7 +212,7 @@ export function DataViewer({ state, onReset, onApplyFilters, onPageChange }: Dat
             fieldAnalysis={safeFieldAnalysis}
             appliedFilters={appliedFiltersForSection}
             onApplyFilters={(pendingFilters, searchTerm) => {
-              // Sadece görünür (gizlenmemiş) alanları allFields olarak ilet
+              // Only pass visible (not hidden) fields as allFields
               const visibleFields = safeFieldAnalysis.allFields.filter((f: string) => !safeHiddenFields.has(f));
               onApplyFilters({
                 ...pendingFilters,
@@ -233,7 +233,7 @@ export function DataViewer({ state, onReset, onApplyFilters, onPageChange }: Dat
         currentPage={paginationInfo.currentPage || 1}
         totalPages={paginationInfo.totalPages || 1}
         totalItems={safeFilteredItems}
-        pageSize={60}
+        pageSize={36}
         onPageChange={onPageChange}
         isLoading={state.isLoading}
       />

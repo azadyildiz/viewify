@@ -34,7 +34,7 @@ export function formatValue(
   const str = value == null ? "" : String(value);
   const isTruncated = str.length > maxLength;
   
-  // Eğer metin çok uzunsa, önce kısalt
+  // If text is too long, truncate first
   const displayText = isTruncated ? str.slice(0, maxLength) : str;
   
   const display = isTruncated

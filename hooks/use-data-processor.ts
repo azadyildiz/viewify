@@ -11,7 +11,7 @@ import { normalizeError, logError } from "@/lib/error-utils"
  * Defines the shape of the state for the data viewer.
  */
 export interface DataProcessorState {
-  // processedData, worker'dan gelen sayfalanmış veriyi ve metadata'yı tutar.
+  // processedData holds paginated data and metadata from worker
   processedData: ProcessedData | null
   dataSource: { url?: string; fileContent?: string }
   fileName: string | null

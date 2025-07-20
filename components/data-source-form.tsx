@@ -52,6 +52,8 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
   const [isPreviewLoading, setIsPreviewLoading] = useState(false)
   const [previewError, setPreviewError] = useState<string | null>(null)
 
+  const [jsonRootType, setJsonRootType] = useState<'object' | 'array' | 'unknown'>("unknown")
+
   useEffect(() => {
     if (dataType === "json") {
       setMaxItems(-1)
@@ -96,6 +98,18 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
       setFile(selectedFile)
       setFileName(selectedFile.name)
       setFileSize(formatFileSize(selectedFile.size))
+      if (extension === "json") {
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          const text = (event.target?.result as string)?.trim()
+          if (text?.startsWith("{")) setJsonRootType("object")
+          else if (text?.startsWith("[")) setJsonRootType("array")
+          else setJsonRootType("unknown")
+        }
+        reader.readAsText(selectedFile.slice(0, 100)) // Only the beginning is enough
+      } else {
+        setJsonRootType("unknown")
+      }
     }
   }, [dataType, dataSelector, toast])
 
@@ -104,6 +118,7 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
     setFile(null)
     setFileName(null)
     setFileSize(null)
+    setJsonRootType("unknown")
     const fileInput = document.getElementById("data-file-upload") as HTMLInputElement
     if (fileInput) fileInput.value = ""
   }, [])
@@ -227,7 +242,9 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
           if (dataType !== "json" && maxItems > 0) {
             content = text.split('\n').slice(0, maxItems).join('\n');
           }
-          onSubmit({ fileContent: content }, dataType, dataSelector.trim(), maxItems, fileName)
+          // JSON and root array, send empty selector
+          const selectorToSend = (dataType === "json" && jsonRootType === "array") ? "" : dataSelector.trim();
+          onSubmit({ fileContent: content }, dataType, selectorToSend, maxItems, fileName)
         } catch (error) {
           const err = normalizeError(error);
           logError(err, 'handleSubmit.reader.onload');
@@ -513,8 +530,11 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
                 value={dataSelector}
                 onChange={(e) => setDataSelector(e.target.value)}
                 className="h-12 border-2 border-gray-200 focus:border-black"
-                disabled={isLoading || isPreviewLoading || dataType === "csv"}
+                disabled={isLoading || isPreviewLoading || dataType === "csv" || (dataType === "json" && jsonRootType === "array")}
               />
+              {dataType === "json" && jsonRootType === "array" && (
+                <p className="text-xs text-blue-700 mt-1">Root JSON is an array. All items will be analyzed directly.</p>
+              )}
             </div>
 
             <div className="space-y-2">

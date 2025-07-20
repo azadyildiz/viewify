@@ -56,6 +56,14 @@ interface AvailableFieldsSectionProps {
   isLoading?: boolean
 }
 
+// Yardımcı fonksiyonlar
+function getRootFields(allFields: string[]): string[] {
+  return allFields.filter(field => !field.includes('.'))
+}
+function hasChildren(field: string, allFields: string[]): boolean {
+  return allFields.some(f => f.startsWith(field + '.'))
+}
+
 export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, isLoading = false }: AvailableFieldsSectionProps) {
   const [pendingHiddenFields, setPendingHiddenFields] = useState(new Set(hiddenFields))
   const [showAllFields, setShowAllFields] = useState(false)
@@ -63,11 +71,11 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
   const lastAppliedHiddenFields = React.useRef(new Set(hiddenFields))
 
   useEffect(() => {
-    // Sadece gerçekten parent'tan gelen değişiklik varsa güncelle
+    // Only update if there's a real change from parent
     const currentHiddenFields = new Set(hiddenFields)
     const lastApplied = lastAppliedHiddenFields.current
     
-    // Eğer kullanıcı etkileşimde değilse ve gerçekten değişiklik varsa güncelle
+    // If user is not interacting and there's a real change, update
     if (!isUserInteracting.current && 
         (lastApplied.size !== currentHiddenFields.size ||
          !Array.from(lastApplied).every(field => currentHiddenFields.has(field)))) {
@@ -76,16 +84,30 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
     }
   }, [hiddenFields])
 
+  // Sadece root alanlar
+  const rootFields = getRootFields(fieldAnalysis.allFields)
   const initialDisplayLimit = 20
   const visibleFieldCount = showAllFields
-    ? fieldAnalysis.allFields.length
-    : Math.min(initialDisplayLimit, fieldAnalysis.allFields.length)
-  const shouldShowToggleBadge = fieldAnalysis.allFields.length > initialDisplayLimit
+    ? rootFields.length
+    : Math.min(initialDisplayLimit, rootFields.length)
+  const shouldShowToggleBadge = rootFields.length > initialDisplayLimit
 
   const toggleFieldVisibility = (field: string) => {
     isUserInteracting.current = true
     const newHidden = new Set(pendingHiddenFields)
-    newHidden.has(field) ? newHidden.delete(field) : newHidden.add(field)
+    if (pendingHiddenFields.has(field)) {
+      // Show: show root and children
+      newHidden.delete(field)
+      fieldAnalysis.allFields.forEach(f => {
+        if (f.startsWith(field + '.') || f === field) newHidden.delete(f)
+      })
+    } else {
+      // Hide: hide root and children
+      newHidden.add(field)
+      fieldAnalysis.allFields.forEach(f => {
+        if (f.startsWith(field + '.')) newHidden.add(f)
+      })
+    }
     setPendingHiddenFields(newHidden)
     requestAnimationFrame(() => { isUserInteracting.current = false })
   }
@@ -109,7 +131,7 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
     requestAnimationFrame(() => { isUserInteracting.current = false })
   }
 
-  const shownFieldCount = fieldAnalysis.allFields.filter(f => !hiddenFields.has(f)).length
+  const shownFieldCount = rootFields.filter(f => !hiddenFields.has(f)).length
 
   return (
     <Card className="flex flex-col justify-between p-4 gap-4">
@@ -127,7 +149,7 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
       </CardHeader>
       <CardContent className="p-0">
         <div className="flex flex-wrap gap-1.5">
-          {fieldAnalysis.allFields.slice(0, visibleFieldCount).map((field) => (
+          {rootFields.slice(0, visibleFieldCount).map((field) => (
             <Badge
               key={field}
               variant="outline"
@@ -142,6 +164,7 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
               title={`${fieldAnalysis.fieldCounts.get(field) || 0} items use this field`}
             >
               {field.replace(/\./g, ' > ')}
+              {hasChildren(field, fieldAnalysis.allFields) && ' [📂]'}
             </Badge>
           ))}
           {shouldShowToggleBadge && (
@@ -150,7 +173,7 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
               className={cn("cursor-pointer text-xs font-normal py-0.5 px-1.5", isLoading ? "cursor-not-allowed opacity-50" : "")}
               onClick={() => !isLoading && setShowAllFields(!showAllFields)}
             >
-              {showAllFields ? "Show less" : `+${fieldAnalysis.allFields.length - initialDisplayLimit} more`}
+              {showAllFields ? "Show less" : `+${rootFields.length - initialDisplayLimit} more`}
             </Badge>
           )}
         </div>
@@ -186,11 +209,11 @@ export const FilterSection = React.memo(function FilterSection({
   // Sync local pending state only when there's a significant change (like reset)
   // Don't sync on every minor change to prevent losing user input
   useEffect(() => {
-    // Sadece gerçekten parent'tan gelen değişiklik varsa güncelle
+    // Only update if there's a real change from parent
     const currentFilters = appliedFilters
     const lastApplied = lastAppliedFilters.current
     
-    // Eğer kullanıcı etkileşimde değilse ve gerçekten değişiklik varsa güncelle
+    // If user is not interacting and there's a real change, update
     if (!isUserInteracting.current && 
         JSON.stringify(currentFilters) !== JSON.stringify(lastApplied)) {
       setPendingFilters(currentFilters)
@@ -203,13 +226,11 @@ export const FilterSection = React.memo(function FilterSection({
     const currentHiddenFields = appliedFilters.hiddenFields
     const currentPendingHiddenFields = pendingFilters.hiddenFields
     
-    // Hidden fields değiştiğinde hemen güncelle (warning için)
+    // Update hidden fields immediately when they change (for warning display)
     if (JSON.stringify(currentHiddenFields) !== JSON.stringify(currentPendingHiddenFields)) {
       setPendingFilters(prev => ({ ...prev, hiddenFields: currentHiddenFields }))
     }
   }, [appliedFilters.hiddenFields, pendingFilters.hiddenFields])
-
-
 
   /**
    * Updates a specific key in the pending filters state.
@@ -303,7 +324,7 @@ export const FilterSection = React.memo(function FilterSection({
     requestAnimationFrame(() => { isUserInteracting.current = false })
   }
 
-  // Filter out hidden fields from conditional filtering options (her zaman parent'tan gelen appliedFilters ile güncel)
+  // Filter out hidden fields from conditional filtering options (always updated with appliedFilters from parent)
   const visibleFieldsForConditional = fieldAnalysis.allFields.filter(field => !appliedFilters.hiddenFields.has(field))
   
   // Check for conditional filters that use hidden fields

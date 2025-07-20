@@ -45,6 +45,9 @@ export function ConditionalFilterRow({ filter, allFields, onUpdate, onRemove, di
 
   const isValueInputDisabled = filter.condition === "isEmpty" || filter.condition === "isNotEmpty"
 
+  // Sadece root alanlar
+  const rootFields = getRootFields(allFields)
+
   return (
     <div key={filter.id} className={cn(
       "grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-1.5 items-center p-2 rounded-md mt-2",
@@ -64,7 +67,7 @@ export function ConditionalFilterRow({ filter, allFields, onUpdate, onRemove, di
             <CommandList>
               <CommandEmpty>No field found.</CommandEmpty>
               <CommandGroup>
-                {allFields.map((field) => (
+                {rootFields.map((field) => (
                   <CommandItem
                     key={field}
                     value={field}
@@ -74,7 +77,7 @@ export function ConditionalFilterRow({ filter, allFields, onUpdate, onRemove, di
                     }}
                   >
                     <Check className={cn("mr-2 h-4 w-4", filter.field === field ? "opacity-100" : "opacity-0")} />
-                    {field.replace(/\./g, ' > ')}
+                    {field.replace(/\./g, ' > ')}{hasChildren(field, allFields) && ' [📂]'}
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -120,4 +123,12 @@ export function ConditionalFilterRow({ filter, allFields, onUpdate, onRemove, di
       </Button>
     </div>
   )
+}
+
+// Helper functions
+function getRootFields(allFields: string[]): string[] {
+  return allFields.filter(field => !field.includes('.'))
+}
+function hasChildren(field: string, allFields: string[]): boolean {
+  return allFields.some(f => f.startsWith(field + '.'))
 }
