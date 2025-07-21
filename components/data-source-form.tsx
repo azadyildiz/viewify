@@ -54,6 +54,9 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
 
   const [jsonRootType, setJsonRootType] = useState<'object' | 'array' | 'unknown'>("unknown")
 
+  // Add drag & drop state
+  const [isDragActive, setIsDragActive] = useState(false)
+
   useEffect(() => {
     if (dataType === "json") {
       setMaxItems(-1)
@@ -331,16 +334,33 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
     }
   }
 
+  // Add drag & drop handlers
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragActive(true);
+  };
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragActive(false);
+  };
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFileChange({ target: { files: e.dataTransfer.files } } as any);
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto">
-      <Card className="border-2 border-gray-200">
+      <Card className="border-2 border-zinc-200">
         <CardHeader className="text-center p-4">
           <Link href="/" className="inline-flex justify-center items-center gap-3 mb-4 group">
             <FileSearch className="w-8 h-8 text-slate-900 group-hover:text-slate-700 transition-colors" />
             <h1 className="text-4xl font-bold text-black group-hover:text-slate-700 transition-colors">Viewify</h1>
           </Link>
           <CardTitle className="text-2xl font-bold text-black">Data Source Configuration</CardTitle>
-          <CardDescription className="text-gray-600">
+          <CardDescription className="text-zinc-600">
             Upload an XML, JSON, or CSV file.
           </CardDescription>
         </CardHeader>
@@ -372,8 +392,13 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
                 Upload File
               </Label>
               <div
+                onDragOver={handleDragOver}
+                onDragEnter={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
                 className={cn(
                   "flex items-center justify-center w-full h-auto border-2 border-dashed rounded-lg",
+                  isDragActive && "border-blue-500 bg-blue-50",
                   (isLoading || isPreviewLoading) && "opacity-50 cursor-not-allowed",
                   fileName && "border-solid border-green-500 bg-green-50",
                 )}
@@ -411,12 +436,12 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
                     htmlFor="data-file-upload"
                     className={cn("flex flex-col items-center justify-center w-full h-full, p-4", "cursor-pointer")}
                   >
-                    <Upload className="w-8 h-8 text-gray-400 mb-2" />
-                    <p className="text-sm text-gray-500">
+                    <Upload className="w-8 h-8 text-zinc-400 mb-2" />
+                    <p className="text-sm text-zinc-500">
                       <span className="font-semibold">Choose a file</span> or drag and drop
                     </p>
                     {/* File size limit info */}
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-zinc-500 mt-1">
                       Maximum file size: 500MB
                     </div>
                   </label>
@@ -449,43 +474,43 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
                           </TabsTrigger>
                         </TabsList>
                         <TabsContent value="windows">
-                          <div className="bg-[#1e1e1e] rounded-t-md px-4 pt-3 pb-2 flex items-center justify-between border border-gray-800 border-b-0">
-                            <span className="text-xs text-gray-300 font-semibold">powershell</span>
+                          <div className="bg-[#1e1e1e] rounded-t-md px-4 pt-3 pb-2 flex items-center justify-between border border-zinc-800 border-b-0">
+                            <span className="text-xs text-zinc-300 font-semibold">powershell</span>
                             <span className="flex items-center gap-1">
                               <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
                               <span className="inline-block w-3 h-3 rounded-full bg-yellow-400"></span>
                               <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
                             </span>
                           </div>
-                          <div className="bg-[#23272e] text-green-400 font-mono rounded-b-md p-4 text-sm flex items-center gap-2 shadow-inner border border-gray-800 border-t-0">
+                          <div className="bg-[#23272e] text-green-400 font-mono rounded-b-md p-4 text-sm flex items-center gap-2 shadow-inner border border-zinc-800 border-t-0">
                             <span className="select-none">C:\&gt;</span>
                             <span>curl.exe -O "URL_HERE"</span>
                           </div>
                         </TabsContent>
                         <TabsContent value="linux">
-                          <div className="bg-[#1e1e1e] rounded-t-md px-4 pt-3 pb-2 flex items-center justify-between border border-gray-800 border-b-0">
-                            <span className="text-xs text-gray-300 font-semibold">terminal</span>
+                          <div className="bg-[#1e1e1e] rounded-t-md px-4 pt-3 pb-2 flex items-center justify-between border border-zinc-800 border-b-0">
+                            <span className="text-xs text-zinc-300 font-semibold">terminal</span>
                             <span className="flex items-center gap-1">
                               <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
                               <span className="inline-block w-3 h-3 rounded-full bg-yellow-400"></span>
                               <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
                             </span>
                           </div>
-                          <div className="bg-[#23272e] text-green-400 font-mono rounded-b-md p-4 text-sm flex items-center gap-2 shadow-inner border border-gray-800 border-t-0">
+                          <div className="bg-[#23272e] text-green-400 font-mono rounded-b-md p-4 text-sm flex items-center gap-2 shadow-inner border border-zinc-800 border-t-0">
                             <span className="select-none">$</span>
                             <span>wget "URL_HERE"</span>
                           </div>
                         </TabsContent>
                         <TabsContent value="mac">
-                          <div className="bg-[#1e1e1e] rounded-t-md px-4 pt-3 pb-2 flex items-center justify-between border border-gray-800 border-b-0">
-                            <span className="text-xs text-gray-300 font-semibold">terminal</span>
+                          <div className="bg-[#1e1e1e] rounded-t-md px-4 pt-3 pb-2 flex items-center justify-between border border-zinc-800 border-b-0">
+                            <span className="text-xs text-zinc-300 font-semibold">terminal</span>
                             <span className="flex items-center gap-1">
                               <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
                               <span className="inline-block w-3 h-3 rounded-full bg-yellow-400"></span>
                               <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
                             </span>
                           </div>
-                          <div className="bg-[#23272e] text-green-400 font-mono rounded-b-md p-4 text-sm flex items-center gap-2 shadow-inner border border-gray-800 border-t-0">
+                          <div className="bg-[#23272e] text-green-400 font-mono rounded-b-md p-4 text-sm flex items-center gap-2 shadow-inner border border-zinc-800 border-t-0">
                             <span className="select-none">$</span>
                             <span>curl -O "URL_HERE"</span>
                           </div>
@@ -501,7 +526,7 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
               <Button
                 type="button"
                 onClick={handlePreviewClick}
-                className="flex-1 text-sm md:text-base font-semibold bg-gray-700 hover:bg-gray-600 text-white"
+                className="flex-1 text-sm md:text-base font-semibold bg-zinc-700 hover:bg-zinc-600 text-white"
                 disabled={isLoading || isPreviewLoading || !file}
               >
                 {isPreviewLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Code className="w-4 h-4 mr-2" />}
@@ -529,7 +554,7 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
                 placeholder={getSelectorPlaceholder()}
                 value={dataSelector}
                 onChange={(e) => setDataSelector(e.target.value)}
-                className="h-12 border-2 border-gray-200 focus:border-black"
+                className="h-12 border-2 border-zinc-200 focus:border-black"
                 disabled={isLoading || isPreviewLoading || dataType === "csv" || (dataType === "json" && jsonRootType === "array")}
               />
               {dataType === "json" && jsonRootType === "array" && (
@@ -546,7 +571,7 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
                 onValueChange={(value) => setMaxItems(Number.parseInt(value))}
                 disabled={isLoading || isPreviewLoading || dataType === "json"}
               >
-                <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-black">
+                <SelectTrigger className="h-12 border-2 border-zinc-200 focus:border-black">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -562,19 +587,18 @@ export function DataSourceForm({ onSubmit, isLoading }: DataSourceFormProps) {
               </Select>
               {dataType === "json" ? (
                 <p className="text-xs text-muted-foreground mt-1">
-                  JSON files are always processed completely for accurate parsing. This setting is ignored.
+                  JSON files are always processed completely for accurate parsing.
                 </p>
               ) : (
                 <p className="text-xs text-muted-foreground mt-1">
-                  The "All Lines" option can be slow for large files. A limited selection is recommended for better
-                  performance.
+                  The "All Lines" option can be slow for large files.
                 </p>
               )}
             </div>
 
             <Button
               type="submit"
-              className="w-full h-12 text-lg font-semibold bg-black hover:bg-gray-800 text-white"
+              className="w-full h-12 text-lg font-semibold bg-black hover:bg-zinc-800 text-white"
               disabled={isLoading || isPreviewLoading || !file}
             >
               {isLoading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : "Analyze Data"}

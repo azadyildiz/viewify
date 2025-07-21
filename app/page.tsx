@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 text-black">
+    <div className="flex flex-col min-h-screen bg-zinc-50 text-black">
       {/* JSON-LD Structured Data */}
       <Script
         id="structured-data"
@@ -113,11 +113,11 @@ export default function LandingPage() {
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-black">Viewify</h1>
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-800">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-800">
               Analyze Large Data Files, Instantly.
             </h2>
 
-            <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-6 text-lg text-zinc-600 max-w-2xl mx-auto">
               Viewify is an{" "}
               <span className={cn("marker marker-green font-medium text-green-950")}>open-source tool</span> to
               progressively load and analyze large XML, JSON, and CSV files directly in your browser. <br />
@@ -131,7 +131,7 @@ export default function LandingPage() {
               <Link href="/viewer">
                 <Button
                   size="lg"
-                  className="bg-black text-white hover:bg-gray-800 shadow-lg transition-transform duration-200 hover:scale-105"
+                  className="bg-black text-white  hover:bg-zinc-900 shadow-lg transition-colors duration-200"
                 >
                   Go to Viewer <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
@@ -146,17 +146,17 @@ export default function LandingPage() {
       </header>
 
       <footer className="py-8">
-        <div className="container mx-auto px-4 text-center text-gray-500">
+        <div className="container mx-auto px-4 text-center text-zinc-500">
           <div className="mb-2">
-            <p className="text-lg font-medium text-gray-700 mb-2">Viewify</p>
+            <p className="text-lg font-medium text-zinc-700 mb-2">Viewify</p>
             <p className="text-sm">A high-performance data analysis tool</p>
           </div>
           <div className="mb-2">
             <p className="text-sm">Developed with ❤️ by <a href="https://github.com/azadyildiz/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">Azad Yıldız</a></p>
             <div className="flex justify-center gap-4 mt-2 text-xs">
-              <a href="/privacy" className="text-gray-500 hover:text-gray-700">Privacy</a>
-              <a href="/terms" className="text-gray-500 hover:text-gray-700">Terms</a>
-              <a href="/cookies" className="text-gray-500 hover:text-gray-700">Cookies</a>
+              <a href="/privacy" className="text-zinc-500 hover:text-zinc-700">Privacy</a>
+              <a href="/terms" className="text-zinc-500 hover:text-zinc-700">Terms</a>
+              <a href="/cookies" className="text-zinc-500 hover:text-zinc-700">Cookies</a>
             </div>
           </div>
           <div className="flex justify-center items-center space-x-4">
@@ -167,8 +167,8 @@ export default function LandingPage() {
               className="group"
               aria-label="GitHub Profile"
             >
-              <div className="w-10 h-10 rounded-full bg-gray-200 group-hover:bg-gray-300 flex items-center justify-center transition-all">
-                <Github className="w-5 h-5 text-gray-600 group-hover:text-gray-800" />
+              <div className="w-10 h-10 rounded-full bg-zinc-200 group-hover:bg-zinc-300 flex items-center justify-center transition-all">
+                <Github className="w-5 h-5 text-zinc-600 group-hover:text-zinc-800" />
               </div>
             </a>
             <a
@@ -178,8 +178,8 @@ export default function LandingPage() {
               className="group"
               aria-label="LinkedIn Profile"
             >
-              <div className="w-10 h-10 rounded-full bg-gray-200 group-hover:bg-gray-300 flex items-center justify-center transition-all">
-                <Linkedin className="w-5 h-5 text-gray-600 group-hover:text-gray-800" />
+              <div className="w-10 h-10 rounded-full bg-zinc-200 group-hover:bg-zinc-300 flex items-center justify-center transition-all">
+                <Linkedin className="w-5 h-5 text-zinc-600 group-hover:text-zinc-800" />
               </div>
             </a>
           </div>

@@ -46,8 +46,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       return (
         <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center" role="alert" aria-live="assertive">
           <AlertTriangle className="w-16 h-16 text-red-500 mb-4" aria-hidden="true" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Something went wrong</h2>
-          <p className="text-gray-600 mb-6 max-w-md">
+          <h2 className="text-2xl font-bold text-zinc-900 mb-2">Something went wrong</h2>
+          <p className="text-zinc-600 mb-6 max-w-md">
             An unexpected error occurred. Please try refreshing the page or contact support if the problem persists.
           </p>
           <div className="flex gap-4">
@@ -61,10 +61,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
           </div>
           {process.env.NODE_ENV === "development" && this.state.error && (
             <details className="mt-6 text-left max-w-2xl">
-              <summary className="cursor-pointer text-sm font-medium text-gray-700 mb-2">
+              <summary className="cursor-pointer text-sm font-medium text-zinc-700 mb-2">
                 Error Details (Development)
               </summary>
-              <pre className="bg-gray-100 p-4 rounded text-xs overflow-auto">
+              <pre className="bg-zinc-100 p-4 rounded text-xs overflow-auto">
                 {this.state.error.stack}
               </pre>
             </details>

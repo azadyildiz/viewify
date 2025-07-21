@@ -19,11 +19,11 @@ export function FilePreviewDialog({ isOpen, onClose, fileContent, isLoading, err
       <DialogContent className="max-w-4xl h-[80vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-black">File Preview</DialogTitle>
-          <DialogDescription className="text-gray-600">
+          <DialogDescription className="text-zinc-600">
             The first 500 lines of the file content.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex-1 border border-gray-200 rounded-md bg-gray-50 p-4 overflow-hidden relative">
+        <div className="flex-1 border border-zinc-200 rounded-md bg-zinc-50 p-4 overflow-hidden relative">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
               <Loader2 className="w-8 h-8 animate-spin text-black" />
@@ -32,7 +32,7 @@ export function FilePreviewDialog({ isOpen, onClose, fileContent, isLoading, err
           )}
           {fileContent && !isLoading ? (
             <ScrollArea className="h-full w-full">
-              <pre className="whitespace-pre-wrap break-words text-sm font-mono text-gray-800">
+              <pre className="whitespace-pre-wrap break-words text-sm font-mono text-zinc-800">
                 {fileContent.split('\n').slice(0, 500).join('\n')}
               </pre>
             </ScrollArea>
