@@ -99,7 +99,7 @@ export const RenderField = ({
   if (!isObject && !isArray) {
     const { display, isTruncated, full } = formatValue(value, detailsMaxLength ?? 40, appliedSearchTerm)
     return (
-      <div className="border-b border-gray-100 py-2 last:border-b-0 flex justify-between items-baseline flex-wrap gap-x-2">
+      <div className="border-b border-zinc-100 py-2 last:border-b-0 flex justify-between items-baseline flex-wrap gap-x-2">
         <div className="flex items-start justify-between gap-2 min-w-0">
                   <div className="text-sm font-medium break-words flex-grow min-w-0">
           <span className={cn((isFilteredField || hasNestedSearchTerm) && "bg-green-100 text-green-800 px-1 rounded-sm font-semibold")}>{fieldKey}</span>
@@ -134,7 +134,7 @@ export const RenderField = ({
 
   // Nested fields (objects or arrays)
   return (
-    <div className="border-b border-gray-100 py-2 last:border-b-0 flex justify-between items-baseline flex-wrap gap-x-2">
+    <div className="border-b border-zinc-100 py-2 last:border-b-0 flex justify-between items-baseline flex-wrap gap-x-2">
       <div
         className="flex items-center justify-between gap-2 cursor-pointer min-w-0"
         onClick={() => toggleValueExpansion(index, path)}

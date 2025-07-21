@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-50 to-blue-50">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
           <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 transition-colors">
@@ -23,40 +23,40 @@ export default function PrivacyPage() {
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Shield className="w-8 h-8 text-blue-600" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
-            <p className="text-gray-600">Last updated: January 1, 2024</p>
+            <h1 className="text-4xl font-bold text-zinc-900 mb-2">Privacy Policy</h1>
+            <p className="text-zinc-600">Last updated: January 1, 2024</p>
           </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-none">
           <div className="space-y-8">
             {/* Introduction */}
-            <section className="border-b border-gray-200 pb-8">
+            <section className="border-b border-zinc-200 pb-8">
               <div className="flex items-center mb-4">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
                   <Eye className="w-5 h-5 text-blue-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Introduction</h2>
+                <h2 className="text-2xl font-bold text-zinc-900">Introduction</h2>
               </div>
-              <p className="text-gray-700 leading-relaxed text-lg">
+              <p className="text-zinc-700 leading-relaxed text-lg">
                 Viewify ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website at <a href="https://viewify.co" className="text-blue-600 hover:text-blue-800 font-medium">viewify.co</a>.
               </p>
             </section>
 
             {/* Information We Collect */}
-            <section className="border-b border-gray-200 pb-8">
+            <section className="border-b border-zinc-200 pb-8">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4">
                   <Users className="w-5 h-5 text-green-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Information We Collect</h2>
+                <h2 className="text-2xl font-bold text-zinc-900">Information We Collect</h2>
               </div>
               
               <div className="space-y-6">
                 <div className="bg-blue-50 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Analytics Data</h3>
-                  <p className="text-gray-700 mb-4">We use Cloudflare Analytics to understand how visitors interact with our website. This service collects:</p>
-                  <ul className="space-y-2 text-gray-700">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-3">Analytics Data</h3>
+                  <p className="text-zinc-700 mb-4">We use Cloudflare Analytics to understand how visitors interact with our website. This service collects:</p>
+                  <ul className="space-y-2 text-zinc-700">
                     <li className="flex items-center">
                       <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
                       Page view counts
@@ -81,9 +81,9 @@ export default function PrivacyPage() {
                 </div>
 
                 <div className="bg-red-50 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">No Personal Data Collection</h3>
-                  <p className="text-gray-700 mb-4"><strong>Important:</strong> Viewify is a client-side only application. We do not collect, store, or process any personal data, including:</p>
-                  <ul className="space-y-2 text-gray-700">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-3">No Personal Data Collection</h3>
+                  <p className="text-zinc-700 mb-4"><strong>Important:</strong> Viewify is a client-side only application. We do not collect, store, or process any personal data, including:</p>
+                  <ul className="space-y-2 text-zinc-700">
                     <li className="flex items-center">
                       <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
                       File contents you upload
@@ -106,19 +106,19 @@ export default function PrivacyPage() {
             </section>
 
             {/* How We Use Information */}
-            <section className="border-b border-gray-200 pb-8">
+            <section className="border-b border-zinc-200 pb-8">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
                   <Settings className="w-5 h-5 text-purple-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">How We Use Information</h2>
+                <h2 className="text-2xl font-bold text-zinc-900">How We Use Information</h2>
               </div>
               
               <div className="space-y-6">
                 <div className="bg-purple-50 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Analytics Data</h3>
-                  <p className="text-gray-700 mb-4">We use analytics data to:</p>
-                  <ul className="space-y-2 text-gray-700">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-3">Analytics Data</h3>
+                  <p className="text-zinc-700 mb-4">We use analytics data to:</p>
+                  <ul className="space-y-2 text-zinc-700">
                     <li className="flex items-center">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
                       Improve website performance
@@ -139,9 +139,9 @@ export default function PrivacyPage() {
                 </div>
 
                 <div className="bg-green-50 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">No Data Processing</h3>
-                  <p className="text-gray-700 mb-4">Since Viewify processes all data client-side:</p>
-                  <ul className="space-y-2 text-gray-700">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-3">No Data Processing</h3>
+                  <p className="text-zinc-700 mb-4">Since Viewify processes all data client-side:</p>
+                  <ul className="space-y-2 text-zinc-700">
                     <li className="flex items-center">
                       <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
                       Files never leave your device
@@ -164,18 +164,18 @@ export default function PrivacyPage() {
             </section>
 
             {/* Data Storage and Retention */}
-            <section className="border-b border-gray-200 pb-8">
+            <section className="border-b border-zinc-200 pb-8">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
                   <Lock className="w-5 h-5 text-orange-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Data Storage and Retention</h2>
+                <h2 className="text-2xl font-bold text-zinc-900">Data Storage and Retention</h2>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-orange-50 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Analytics Data</h3>
-                  <div className="space-y-3 text-gray-700">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-4">Analytics Data</h3>
+                  <div className="space-y-3 text-zinc-700">
                     <div className="flex justify-between">
                       <span className="font-medium">Storage Location:</span>
                       <span>Cloudflare's global network</span>
@@ -196,8 +196,8 @@ export default function PrivacyPage() {
                 </div>
 
                 <div className="bg-blue-50 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">User Files</h3>
-                  <div className="space-y-3 text-gray-700">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-4">User Files</h3>
+                  <div className="space-y-3 text-zinc-700">
                     <div className="flex justify-between">
                       <span className="font-medium">Storage:</span>
                       <span>Never stored on our servers</span>
@@ -225,12 +225,12 @@ export default function PrivacyPage() {
                 <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
                   <Mail className="w-5 h-5 text-indigo-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
+                <h2 className="text-2xl font-bold text-zinc-900">Contact Information</h2>
               </div>
               
               <div className="bg-indigo-50 rounded-xl p-6">
-                <p className="text-gray-700 mb-4">If you have questions about this Privacy Policy, please contact us:</p>
-                <div className="space-y-3 text-gray-700">
+                <p className="text-zinc-700 mb-4">If you have questions about this Privacy Policy, please contact us:</p>
+                <div className="space-y-3 text-zinc-700">
                   <div className="flex items-center">
                     <Mail className="w-5 h-5 text-indigo-600 mr-3" />
                     <span className="font-medium">Email:</span>
@@ -252,8 +252,8 @@ export default function PrivacyPage() {
               </div>
             </section>
 
-            <hr className="my-8 border-gray-200" />
-            <p className="text-sm text-gray-500 text-center"><strong>This Privacy Policy is effective as of January 1, 2024.</strong></p>
+            <hr className="my-8 border-zinc-200" />
+            <p className="text-sm text-zinc-500 text-center"><strong>This Privacy Policy is effective as of January 1, 2024.</strong></p>
           </div>
         </div>
       </div>

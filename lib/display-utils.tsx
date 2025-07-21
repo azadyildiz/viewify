@@ -41,7 +41,7 @@ export function formatValue(
     ? (
         <>
           {highlightQuery(displayText, searchTerm)}
-          <span className="text-gray-400">...</span>
+          <span className="text-zinc-400">...</span>
         </>
       )
     : highlightQuery(displayText, searchTerm);
