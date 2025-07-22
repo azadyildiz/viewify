@@ -126,14 +126,13 @@ export function DataViewer({ state, onReset, onApplyFilters, onPageChange }: Dat
     const fieldAnalysisData = state.processedData?.metadata?.fieldAnalysis;
     if (!fieldAnalysisData ||
         !Array.isArray(fieldAnalysisData.allFields) ||
-        !fieldAnalysisData.fieldCounts) {
+        !fieldAnalysisData.fieldCounts)
       return { allFields: [], fieldCounts: new Map<string, number>() };
-    }
     return {
       allFields: fieldAnalysisData.allFields as string[],
-      fieldCounts: fieldAnalysisData.fieldCounts instanceof Map 
-        ? fieldAnalysisData.fieldCounts 
-        : new Map<string, number>(Object.entries(fieldAnalysisData.fieldCounts as Record<string, number>)),
+      fieldCounts: Array.isArray(fieldAnalysisData.fieldCounts)
+        ? new Map(fieldAnalysisData.fieldCounts)
+        : new Map(Object.entries(fieldAnalysisData.fieldCounts as Record<string, number>)),
     };
   }, [state.processedData?.metadata?.fieldAnalysis]);
 
