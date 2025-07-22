@@ -86,6 +86,12 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
 
   // Sadece root alanlar
   const rootFields = getRootFields(fieldAnalysis.allFields)
+  // Root alanları, fieldCounts'a göre azalan şekilde sırala
+  const sortedRootFields = [...rootFields].sort((a, b) => {
+    const countA = fieldAnalysis.fieldCounts.get(a) ?? 0;
+    const countB = fieldAnalysis.fieldCounts.get(b) ?? 0;
+    return countB - countA;
+  });
   const initialDisplayLimit = 20
   const visibleFieldCount = showAllFields
     ? rootFields.length
@@ -149,7 +155,7 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
       </CardHeader>
       <CardContent className="p-0">
         <div className="flex flex-wrap gap-1.5">
-          {rootFields.slice(0, visibleFieldCount).map((field) => (
+          {sortedRootFields.slice(0, visibleFieldCount).map((field) => (
             <Badge
               key={field}
               variant="outline"
@@ -163,8 +169,8 @@ export function AvailableFieldsSection({ fieldAnalysis, hiddenFields, onApply, i
               onClick={() => !isLoading && toggleFieldVisibility(field)}
               title={`${fieldAnalysis.fieldCounts.get(field) || 0} items use this field`}
             >
-              {field.replace(/\./g, ' > ')}
-              {hasChildren(field, fieldAnalysis.allFields) && ' [📂]'}
+              {field.replace(/\./g, ' > ')}{hasChildren(field, fieldAnalysis.allFields) && ' [📂]'}
+              {' '}({(fieldAnalysis.fieldCounts.get(field) ?? 0).toLocaleString()})
             </Badge>
           ))}
           {shouldShowToggleBadge && (
